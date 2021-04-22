@@ -34,7 +34,7 @@ int main(void)
 
     file.close();
 
-    values_of_return = triangle_bucket(values, 3);
+    values_of_return = triangle_bucket(values, 300);
 
     std::cout << std::endl;
 
@@ -91,9 +91,8 @@ std::stack<std::pair<int, double>> triangle_bucket(std::vector<std::pair<int, do
             b_side = std::sqrt(std::pow(values[j].first - mean_of_bucket.first, 2) + std::pow(values[j].second - mean_of_bucket.second, 2));
             c_side = std::sqrt(std::pow(values[j].first - points.top().first, 2) + std::pow(values[j].second - points.top().second, 2));
             p = (a_side + b_side + c_side) / 2;
-            d = std::sqrt(p * (p - a_side) * (p - b_side) * (p - c_side)) * 2 / a_side;
-            area = a_side * d / 2;
-
+            area = std::sqrt(p * (p - a_side) * (p - b_side) * (p - c_side));
+            
             if(area > triangle_area)
             {
                 triangle_area = area;
