@@ -5,6 +5,7 @@
 #include <string>
 #include <stack>
 #include <sys/time.h>
+#include <typeinfo>
 
 std::stack<std::pair<int, double>> triangle_bucket(std::vector<std::pair<int, double>>, int, long int);
 
@@ -12,9 +13,9 @@ int main(void)
 {
     struct timeval tv;
     
-    gettimeofday(&tv, NULL);
+    //gettimeofday(&tv, NULL);
     
-    double time_begin = ((double)tv.tv_sec) * 1000 + ((double)tv.tv_sec) / 1000;
+    //double time_begin = ((double)tv.tv_sec) * 1000 + ((double)tv.tv_sec) / 1000;
 
     std::vector<std::pair<int, double>> values;// {{1,5},{2,3},{5,1},{6,4},{9,6},{11,4},{13,3},{14,2},{18,5}};
     std::stack<std::pair<int, double>> values_of_return;
@@ -22,9 +23,12 @@ int main(void)
     std::string str;
     double str1 = 0, y = 0;
     int x = 0;
-    int a;
-
-    std::ifstream file("./data_qt_data_input.txt");
+    //int a;
+    
+    //unsigned w;
+    //std::cout << sizeof(w) << std::endl;
+    
+    std::ifstream file("/home/l/code/cpp/data_qt_data_input.txt");
 
     while(!file.eof())//getline(file, str))
     {
@@ -54,12 +58,20 @@ int main(void)
     }
 
     file2.close();*/
+    
+    gettimeofday(&tv, NULL);
+    
+    double time_begin = ((double)tv.tv_sec) * 1000 + ((double)tv.tv_usec) / 1000;
 
     values_of_return = triangle_bucket(values, 500, i);
 
+    gettimeofday(&tv, NULL);
+    
+    double time_end = ((double)tv.tv_sec) * 1000 + ((double)tv.tv_usec) / 1000;
+
     //std::cout << std::endl;
 
-    std::ofstream file1("./data_qt_data_output.txt");
+    std::ofstream file1("/home/l/code/cpp/data_qt_data_output.txt");
 
     while(!values_of_return.empty())
     {
@@ -70,13 +82,13 @@ int main(void)
 
     file1.close();
 
-    gettimeofday(&tv, NULL);
+    //gettimeofday(&tv, NULL);
     
-    double time_end = ((double)tv.tv_sec) * 1000 + ((double)tv.tv_sec) / 1000;
+    //double time_end = ((double)tv.tv_sec) * 1000 + ((double)tv.tv_sec) / 1000;
     double total_time_ms = time_end - time_begin;
     
     std::cout << total_time_ms << std::endl;
-    //std::system("~/code/python/plot.py");
+    std::system("~/code/python/plot.py");
 
     return 0;
 }
