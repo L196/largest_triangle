@@ -106,6 +106,7 @@ std::stack<std::pair<int, double>> triangle_bucket(std::vector<std::pair<int, do
     std::pair<double, double> mean_of_bucket {0, 0};
     //int j = 0, k = 0;
     double triangle_area = 0, area = 0, a_side = 0, b_side = 0, c_side, p = 0;//, d = 0;
+    double a_line = 0, b_line = 0;
 
     points.push({values.front().first, values.front().second});
     //std::cout << points.top().first << ' ' << points.top().second << std::endl;
@@ -131,14 +132,21 @@ std::stack<std::pair<int, double>> triangle_bucket(std::vector<std::pair<int, do
 
         t = i * size + 1;
 
+        a_line = mean_of_bucket.first - points.top().first;
+        b_line = mean_of_bucket.second - points.top().second;
+        a_side = std::sqrt(a_line * a_line + b_line * b_line);
+        //a_side = std::sqrt(std::pow(mean_of_bucket.first - points.top().first, 2) + std::pow(mean_of_bucket.second - points.top().second, 2));
+        
         for(j = t; j < t + size && j < values_size - 1; ++j)//, j < values.size() - 1; ++j)
         {
-            //if(j >= values_size - 1)
-            //    break;
+            a_line = values[j].first - mean_of_bucket.first;
+            b_line = values[j].second - mean_of_bucket.second;
+            b_side = std::sqrt(a_line * a_line + b_line * b_line);
 
-            a_side = std::sqrt(std::pow(mean_of_bucket.first - points.top().first, 2) + std::pow(mean_of_bucket.second - points.top().second, 2));
-            b_side = std::sqrt(std::pow(values[j].first - mean_of_bucket.first, 2) + std::pow(values[j].second - mean_of_bucket.second, 2));
-            c_side = std::sqrt(std::pow(values[j].first - points.top().first, 2) + std::pow(values[j].second - points.top().second, 2));
+            a_line = values[j].first - points.top().first;
+            b_line = values[j].second - points.top().second;
+            c_side = std::sqrt(a_line * a_line + b_line * b_line);
+
             p = (a_side + b_side + c_side) / 2;
             area = std::sqrt(p * (p - a_side) * (p - b_side) * (p - c_side));
             
